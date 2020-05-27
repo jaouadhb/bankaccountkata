@@ -1,12 +1,16 @@
 package org.jh.com.transaction;
 
+import org.jh.com.commun.Constant;
 import org.jh.com.exception.TransactionException;
 import org.jh.com.transaction.validator.TransactionValidator;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class Transaction {
+    public static final String SPLIT = " | ";
     private  BigDecimal amount;
     private  TransactionType transactionType;
     private  Instant transactionTime;
@@ -57,5 +61,21 @@ public class Transaction {
 
     public Instant getTransactionTime() {
         return transactionTime;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                .append(getTransactionType())
+                .append(SPLIT)
+                .append(formatDate(getTransactionTime(),ZoneId.of(Constant.EUROPE_PARIS)))
+                .append(SPLIT)
+                .append(getAmount()).toString();
+    }
+
+    public static String formatDate(Instant instant, ZoneId zoneId)
+    {
+        return LocalDateTime.ofInstant(instant,zoneId)
+                .format(Constant.DATE_FORMATTER);
     }
 }

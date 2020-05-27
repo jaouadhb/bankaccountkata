@@ -1,19 +1,27 @@
 package org.jh.com.account;
 
 import org.assertj.core.api.Assertions;
+import org.jh.com.commun.Constant;
 import org.jh.com.exception.FailureOperationException;
 import org.jh.com.exception.InvalidAmountException;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
 
 public class AccountTest {
     Account account;
+    private Supplier<Instant> dateOfTransaction;
 
     @Before
     public void setUp(){
-        account = new Account(new TransactionHistory());
+        account = new Account(new TransactionHistory(),()->Instant.now());
     }
     @Test
     public void return_account_with_zero_balance(){
@@ -69,4 +77,28 @@ public class AccountTest {
             account.withdrawal(BigDecimal.valueOf(200));
         }).isInstanceOf(FailureOperationException.class).hasMessage("This operation can't be done");
     }
+
+    @Test
+    public void should_print_operation_date_amount_balance(){
+        Instant now = Instant.now();
+        Supplier<Instant> date = ()->now;
+        String format = LocalDateTime.ofInstant(now, ZoneId.of(Constant.EUROPE_PARIS))
+                .format(Constant.DATE_FORMATTER);
+
+        account = new Account(new TransactionHistory(),date);
+        account.deposit(BigDecimal.valueOf(150));
+        account.deposit(BigDecimal.valueOf(650));
+        account.withdrawal(BigDecimal.valueOf(10));
+
+        PrintMockStrategy printStrategy = new PrintMockStrategy();
+        account.printStatement(printStrategy);
+        List listOfExpectedStatment = Arrays.asList(
+          "Deposit | "+format+" | 150 | 150",
+           "Deposit | "+format+" | 650 | 800",
+           "Withdrawal | "+format+" | 10 | 790"
+        );
+
+        Assertions.assertThat(printStrategy.getLine()).isEqualTo(listOfExpectedStatment);
+    }
+
 }
