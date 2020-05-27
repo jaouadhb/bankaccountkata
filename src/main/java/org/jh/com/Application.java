@@ -11,6 +11,7 @@ import java.time.Instant;
 public class Application {
     public static void main(String[] args) {
         Account account = new Account(new TransactionHistory(),()-> Instant.now());
+
         account.deposit(BigDecimal.valueOf(130));
         account.deposit(BigDecimal.valueOf(70));
         account.withdrawal(BigDecimal.valueOf(200));

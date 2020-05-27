@@ -32,6 +32,8 @@ public class AccountTest {
     public void increase_balance_when_save_money() {
         account.deposit(BigDecimal.valueOf(100));
         Assertions.assertThat(account.getBalanceFromTransactionHistory()).isEqualTo(BigDecimal.valueOf(100));
+        account.printStatement(new PrintConsoleStrategy());
+
     }
     @Test
     public void throw_exception_when_amount_is_negative(){
