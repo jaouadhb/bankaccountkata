@@ -26,6 +26,27 @@ public class Transaction {
         return new Transaction(amount, transactionType, transactionTime);
     }
 
+
+    /**
+     * int the case of WITHDRAWAL we should return signed amount to calculate the balance
+     * @return signedAmount
+     */
+    public BigDecimal getSignedAmount()
+    {
+        BigDecimal signedAmount = null;
+        switch (getTransactionType()){
+            case DEPOSIT:
+                signedAmount = getAmount();
+                break;
+            case WITHDRAWAL:
+                signedAmount = getAmount().negate();
+                break;
+            default:
+                throw new TransactionException("The transaction type is not supported");
+        }
+        return signedAmount;
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }
