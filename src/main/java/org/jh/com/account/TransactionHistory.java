@@ -42,11 +42,19 @@ public class TransactionHistory {
         transactions.add(transaction);
     }
 
+    /**
+     * This method is used to read the list of all transactions (read only)
+     * @return unmodifiable list
+     */
     public List<Transaction> getAllTransactionsHistory()
     {
         return Collections.unmodifiableList(transactions);
     }
 
+    /**
+     * This method return the balance of transactions
+     * @return Balance
+     */
     public BigDecimal getBalanceFromTransactionHistory()
     {
         BigDecimal lBalanceFromTransaction = getAllTransactionsHistory().stream().map(Transaction::getSignedAmount).reduce(BigDecimal.ZERO, BigDecimal::add);

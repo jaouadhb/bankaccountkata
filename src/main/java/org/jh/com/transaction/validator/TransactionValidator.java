@@ -13,6 +13,12 @@ public class TransactionValidator {
          * This is empty constructor
          */
     }
+
+    /**
+     * this method validate the transaction type
+     * @param transactionType : transaction type
+     * @return TransactionValidator
+     */
     public TransactionValidator validate(TransactionType transactionType)
     {
         if((!TransactionType.DEPOSIT.equals(transactionType))&&(!TransactionType.WITHDRAWAL.equals(transactionType))){
@@ -20,7 +26,11 @@ public class TransactionValidator {
         }
         return this;
     }
-
+    /**
+     * this method validate the transaction amount
+     * @param amount : transaction amount
+     * @return TransactionValidator
+     */
     public TransactionValidator validate(BigDecimal amount)
     {
         if(amount==null || amount.compareTo(BigDecimal.ZERO)<0){
@@ -28,6 +38,12 @@ public class TransactionValidator {
         }
         return this;
     }
+
+    /**
+     * this method validate the transaction transactionTime
+     * @param transactionTime : transaction transactionTime
+     * @return TransactionValidator
+     */
     public TransactionValidator validate(Instant transactionTime)
     {
         if(transactionTime==null ){
