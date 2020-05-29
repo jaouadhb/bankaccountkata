@@ -9,4 +9,6 @@ public final class Constant {
     public static final String HEADER_FORMAT = "Operation  |  date  |  amount  |  balance";
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     public static final String EUROPE_PARIS = "Europe/Paris";
+    public static final String SPLIT = " | ";
+
 }

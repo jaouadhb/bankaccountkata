@@ -9,8 +9,9 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+import static org.jh.com.commun.Constant.SPLIT;
+
 public class Transaction {
-    public static final String SPLIT = " | ";
     private  BigDecimal amount;
     private  TransactionType transactionType;
     private  Instant transactionTime;
